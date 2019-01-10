@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: dev
+server:
+  port: 8888
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+info:
+  service-name: 配置中心
+---
+spring:
+  profiles: dev
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8080"
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/dengbin19910916/config-repo
+          search-paths: order
+          username: dengbin19910916@163.com
+          password: db19910916
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
